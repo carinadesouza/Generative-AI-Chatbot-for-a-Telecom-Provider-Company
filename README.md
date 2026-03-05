@@ -19,7 +19,6 @@ The chatbot handles telecom queries including:
 - ⬆️ Service upgrades
 
 ---
-
 ## 🧠 Key Features
 
 | Feature | Description |
