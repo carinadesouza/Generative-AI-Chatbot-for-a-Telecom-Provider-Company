@@ -1,119 +1,111 @@
-# 📡 Generative AI Telecom Support Chatbot
+# Generative AI Chatbot — Telecom Customer Support
 
-> **🥈 Second Best Project — MIT ADT University** (Selected from 2000+ projects)
+> 🥈 **2nd Best Project — MIT ADT University** (selected from 2,000+ submissions)
 
-A Generative AI–powered customer support chatbot designed to automate telecom query handling using Large Language Models (LLMs). Built with a modular Flask backend, structured prompt engineering, and a feedback-driven evaluation system.
+A customer support chatbot built for telecom providers, powered by a Large Language Model through the OpenRouter API. The system handles common support queries automatically — data plans, billing, SIM activation, network issues — using structured prompt engineering to keep responses accurate and on-topic.
 
----
-
-## 🚀 Overview
-
-Customer support in the telecom industry is burdened by high volumes of repetitive queries. This project demonstrates how Generative AI can automate support interactions while maintaining accuracy, consistency, and scalability.
-
-The chatbot handles telecom queries including:
-
-- 📶 Data plan issues
-- 📱 SIM activation
-- 🔧 Network troubleshooting
-- 💳 Billing inquiries
-- ⬆️ Service upgrades
-
----
-## 🧠 Key Features
-
-| Feature | Description |
-|---|---|
-| 🤖 **LLM-Powered Responses** | Uses OpenRouter API to generate intelligent, context-aware answers |
-| 🔗 **API-Based Architecture** | Modular Flask backend with RESTful request–response workflows |
-| 🧩 **Prompt Engineering** | Structured prompts to control model behaviour and ensure consistent outputs |
-| 📊 **Feedback Logging** | User feedback captured and stored for performance evaluation |
-| ⚙️ **Error Handling** | Robust API error handling for stable, reliable chatbot behaviour |
-| 📈 **Performance Monitoring** | Feedback data enables iterative improvement of responses |
+Built as an academic project exploring how Generative AI can reduce support workload without sacrificing response quality.
 
 ---
 
-## 🏗️ System Architecture
+## The problem it solves
+
+Telecom support teams deal with the same questions hundreds of times a day. Most of them have clear, consistent answers. This chatbot handles that layer — freeing up human agents for cases that actually need them.
+
+It covers:
+- Data plan queries and usage issues
+- SIM activation and number porting
+- Network troubleshooting
+- Billing and payment questions
+- Service upgrades and plan changes
+
+---
+
+## How it works
+
+The user sends a message through the web interface. The Flask backend receives it, wraps it in a structured prompt that constrains the model to act as a telecom support agent, and sends it to the OpenRouter API. The response comes back, gets processed, and is returned to the user. Every interaction — along with any feedback the user submits — is logged for evaluation.
 
 ```
-User Interface
-      │
-      ▼
-Flask Backend API
-      │
-      ▼
-Prompt Engineering Layer
-      │
-      ▼
-OpenRouter LLM API
-      │
-      ▼
-Response Processing
-      │
-      ▼
-User Feedback Logging & Evaluation
+User message
+     ↓
+Flask API
+     ↓
+Prompt engineering layer
+     ↓
+OpenRouter LLM
+     ↓
+Response processing
+     ↓
+User + feedback logger
+```
+
+The prompt engineering layer is what keeps the model focused. Without it, LLMs tend to go off-script. The structured prompts define the chatbot's persona, scope, and response style — so it behaves like a support agent, not a general assistant.
+
+---
+
+## Tech stack
+
+| | |
+|---|---|
+| Language | Python |
+| Backend | Flask |
+| LLM | OpenRouter API |
+| Frontend | HTML (Jinja2 templates) |
+| Data | JSON |
+| Dev tools | Git |
+
+---
+
+## Project structure
+
+```
+Generative-AI-Chatbot-for-a-Telecom-Provider-Company/
+├── main.py              # Flask app — routes, LLM integration, feedback logging
+├── data/                # Telecom knowledge base / training context
+├── templates/           # HTML frontend templates
+├── requirements.txt
+└── .gitignore
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## Getting started
 
-| Category | Technology |
-|---|---|
-| **Language** | Python |
-| **Backend Framework** | Flask |
-| **LLM Integration** | OpenRouter API |
-| **Data Handling** | JSON |
-| **Logging** | Custom feedback storage system |
-| **Dev Tools** | Git, Postman |
-
----
-
-## ⚙️ Getting Started
-
-### Prerequisites
-
-- Python 3.8+
-- An [OpenRouter API](https://openrouter.ai/) key
-
-### Installation
+**Prerequisites:** Python 3.8+, an [OpenRouter API key](https://openrouter.ai)
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/telecom-ai-chatbot.git
-cd telecom-ai-chatbot
+# Clone the repo
+git clone https://github.com/carinadesouza/Generative-AI-Chatbot-for-a-Telecom-Provider-Company.git
+cd Generative-AI-Chatbot-for-a-Telecom-Provider-Company
 
-# Create and activate a virtual environment
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate        # Windows: venv\Scripts\activate
 
+# Install dependencies
+pip install -r requirements.txt
+
+# Add your API key
+echo "OPENROUTER_API_KEY=your_key_here" > .env
 ```
-
-### Configuration
-
-Create a `.env` file in the root directory:
-
-```env
-OPENROUTER_API_KEY=your_api_key_here
-```
-
-### Run the Application
 
 ```bash
-python app.py
+# Run the app
+python main.py
 ```
 
-The Flask server will start at `http://localhost:5000`.
+App runs at `http://localhost:5000`
 
 ---
 
-## 📡 API Endpoints
+## API endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/chat` | Send a user query and receive an AI response |
-| `POST` | `/feedback` | Submit feedback for a chatbot response |
+| `POST` | `/chat` | Send a message, receive an AI response |
+| `POST` | `/feedback` | Submit feedback on a response |
 
-### Example Request
+### Example
 
 ```bash
 curl -X POST http://localhost:5000/chat \
@@ -121,11 +113,9 @@ curl -X POST http://localhost:5000/chat \
   -d '{"message": "How do I activate my new SIM card?"}'
 ```
 
-### Example Response
-
 ```json
 {
-  "response": "To activate your SIM card, please follow these steps...",
+  "response": "To activate your SIM, insert it into your device and restart...",
   "session_id": "abc123",
   "status": "success"
 }
@@ -133,53 +123,54 @@ curl -X POST http://localhost:5000/chat \
 
 ---
 
-## 📊 Feedback & Evaluation Module
+## Feedback and evaluation
 
-The feedback logging system captures user responses to chatbot outputs, enabling:
+Every chatbot response can be rated by the user. That feedback is stored in JSON and used to:
 
-- ✅ Monitoring of response quality
-- 🔍 Identification of incorrect or weak responses
-- 🔄 Iterative improvement of prompt design
+- Track which query types the model handles well vs. poorly
+- Identify gaps in the prompt engineering
+- Guide iterative improvements to response quality
 
-Feedback is stored in structured JSON format and can be used for offline analysis and model performance evaluation.
+It's a simple loop: deploy → collect feedback → improve prompts → redeploy.
 
 ---
 
-## 🔮 Future Improvements
+## What I built
+
+This was a collaborative project. My contributions:
+
+- Designed and built the Flask backend architecture
+- Integrated the OpenRouter LLM API
+- Wrote the prompt engineering strategies that keep the model on-topic
+- Built the RESTful request–response workflow
+- Designed the feedback logging and evaluation system
+- Implemented API error handling for reliability
+
+---
+
+## Roadmap
 
 - [ ] Conversation memory for multi-turn dialogue
-- [ ] Intent classification layer before LLM generation
-- [ ] Dashboard analytics for chatbot performance visualisation
+- [ ] Intent classification before LLM generation
+- [ ] Analytics dashboard for response quality monitoring
 - [ ] Expanded telecom dataset coverage
-- [ ] Production deployment as a web application
+- [ ] Production deployment
 
 ---
 
-## 👩‍💻 Team
+## Recognition
 
-  **Rohit Nanda Naik**
-- Contributed to system design and use case analysis
-- Evaluated chatbot performance and response quality
-- Supported analysis of user feedback and system effectiveness
-
-**Project Collaborator** **Carina Vima De Souza**
-- Designed and implemented the Flask backend architecture
-- Integrated the OpenRouter LLM API
-- Developed structured prompt engineering strategies
-- Implemented RESTful request–response workflows
-- Designed the feedback logging and evaluation system
-- Implemented API error handling and reliability mechanisms
-
+Selected as **2nd best project at MIT ADT University** out of over 2,000 submissions, recognised for technical depth and real-world applicability of Generative AI in an enterprise support context.
 
 ---
 
-## 🏆 Recognition
+## Authors
 
-> 🥈 **Second Best Project — MIT ADT University**
-> Selected from over 2,000 university projects for strong technical execution and real-world relevance in applying Generative AI to telecom customer support.
+**Carina Desouza** — [github.com/carinadesouza](https://github.com/carinadesouza)  
+**Rohit Nanda Naik** — system design, use case analysis, performance evaluation
 
 ---
 
-## 📄 License
+## License
 
-This project is for academic purposes. Please contact the team before reuse or distribution.
+Academic project. Please get in touch before reusing or distributing.
